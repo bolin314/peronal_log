@@ -5,7 +5,17 @@ import SwiftUI
 struct VoiceLogWatchApp: App {
     var body: some Scene {
         WindowGroup {
-            WatchRecordingView()
+            NavigationStack {
+                List {
+                    NavigationLink("Voice Logs") {
+                        WatchLogListView()
+                    }
+                    NavigationLink("Record") {
+                        WatchRecordingView()
+                    }
+                }
+                .navigationTitle("VoiceLog")
+            }
         }
         .modelContainer(for: VoiceLog.self)
     }

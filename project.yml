@@ -43,7 +43,7 @@ targets:
         product: LogCore
     settings:
       INFOPLIST_GENERATION_MODE: GeneratedFile
-      PRODUCT_BUNDLE_IDENTIFIER: com.voicelog.watch
+      PRODUCT_BUNDLE_IDENTIFIER: com.voicelog.app.watchkitapp
       PRODUCT_NAME: VoiceLogWatch
       SWIFT_VERSION: "5.9"
       GENERATE_INFOPLIST_FILE: YES
@@ -51,6 +51,8 @@ targets:
       CURRENT_PROJECT_VERSION: "1"
       NSMicrophoneUsageDescription: "VoiceLog needs microphone access to record voice entries."
       SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
+      INFOPLIST_KEY_WKCompanionAppBundleIdentifier: com.voicelog.app
+      INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp: YES
 
   VoiceLogWatchUITests:
     type: bundle.ui-testing
@@ -61,7 +63,7 @@ targets:
     dependencies:
       - target: VoiceLogWatch
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: com.voicelog.watch.uitests
+      PRODUCT_BUNDLE_IDENTIFIER: com.voicelog.app.watchkitapp.uitests
       SWIFT_VERSION: "5.9"
       GENERATE_INFOPLIST_FILE: YES
       TEST_TARGET_NAME: VoiceLogWatch

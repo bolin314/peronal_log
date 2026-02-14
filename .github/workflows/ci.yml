@@ -10,6 +10,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   build-and-test:
     runs-on: macos-15
@@ -56,6 +59,18 @@ jobs:
             -destination 'platform=watchOS Simulator,name=Apple Watch Series 10 (46mm),OS=latest' \
             -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO
+
+      - name: Commit watchOS screenshots
+        if: github.event_name == 'push'
+        run: |
+          mkdir -p docs/screenshots
+          cp /tmp/watchos-screenshots/*.png docs/screenshots/ 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/screenshots/
+          git diff --cached --quiet && echo "No screenshot changes" && exit 0
+          git commit -m "Update watchOS screenshots [skip ci]"
+          git push
 
       - name: Upload watchOS screenshots
         if: always()

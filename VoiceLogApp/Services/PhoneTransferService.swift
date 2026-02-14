@@ -74,7 +74,9 @@ extension PhoneTransferService: WCSessionDelegate {
                 return
             }
 
-            let recordingsDir = AudioRecorderService.recordingsDirectory
+            let recordingsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                .appendingPathComponent("Recordings", isDirectory: true)
+            try? FileManager.default.createDirectory(at: recordingsDir, withIntermediateDirectories: true)
             if let audioFileName = payload.audioFileName {
                 let destURL = recordingsDir.appendingPathComponent(audioFileName)
                 if !FileManager.default.fileExists(atPath: destURL.path) {

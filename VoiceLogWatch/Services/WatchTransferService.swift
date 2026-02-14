@@ -35,8 +35,9 @@ final class WatchTransferService: NSObject, ObservableObject {
             return
         }
 
-        let audioURL = AudioRecorderService.recordingsDirectory
-            .appendingPathComponent(audioFileName)
+        let recordingsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Recordings", isDirectory: true)
+        let audioURL = recordingsDir.appendingPathComponent(audioFileName)
 
         guard FileManager.default.fileExists(atPath: audioURL.path) else {
             print("[WatchTransfer] Audio file not found: \(audioURL.path)")

@@ -1,0 +1,20 @@
+{
+  "name": "Claude Code Sandbox",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "workspaceFolder": "/workspaces/VibeLog",
+  "mounts": [
+    // This persists your Claude login & history across container rebuilds
+    "source=claude-code-config,target=/home/node/.claude,type=volume"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools", // Useful if you do low-level C++ robotics work
+        "apple-swift.swift-vscode"
+      ]
+    }
+  },
+  "remoteUser": "node"
+}

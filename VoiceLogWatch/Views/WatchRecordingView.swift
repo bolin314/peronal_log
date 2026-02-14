@@ -19,10 +19,10 @@ struct WatchRecordingView: View {
                 ProgressView("Saving...")
             }
         }
-        .overlay(alignment: .topTrailing) {
-            gpsIndicator
-                .padding(.top, 2)
-                .padding(.trailing, 4)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                gpsIndicator
+            }
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.state)
         .onAppear {

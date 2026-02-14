@@ -52,6 +52,20 @@ targets:
       NSMicrophoneUsageDescription: "VoiceLog needs microphone access to record voice entries."
       SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
 
+  VoiceLogWatchUITests:
+    type: bundle.ui-testing
+    platform: watchOS
+    deploymentTarget: "10.0"
+    sources:
+      - Tests/VoiceLogWatchUITests
+    dependencies:
+      - target: VoiceLogWatch
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.voicelog.watch.uitests
+      SWIFT_VERSION: "5.9"
+      GENERATE_INFOPLIST_FILE: YES
+      TEST_TARGET_NAME: VoiceLogWatch
+
   LogCoreTests:
     type: bundle.unit-test
     platform: iOS

@@ -20,14 +20,9 @@ struct WatchRecordingView: View {
             }
         }
         .overlay(alignment: .topTrailing) {
-            HStack(spacing: 4) {
-                gpsIndicator
-                Text(formattedDuration)
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
-            }
-            .padding(.top, 2)
-            .padding(.trailing, 4)
+            gpsIndicator
+                .padding(.top, 2)
+                .padding(.trailing, 4)
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.state)
         .onAppear {
@@ -64,12 +59,18 @@ struct WatchRecordingView: View {
     // MARK: - Recording View
 
     private var recordingView: some View {
-        Button { viewModel.stopRecording(context: modelContext) } label: {
-            Circle()
-                .fill(.red)
-                .frame(width: 60, height: 60)
+        VStack(spacing: 12) {
+            Button { viewModel.stopRecording(context: modelContext) } label: {
+                Circle()
+                    .fill(.red)
+                    .frame(width: 60, height: 60)
+            }
+            .buttonStyle(.plain)
+
+            Text(formattedDuration)
+                .font(.title3.monospacedDigit())
+                .foregroundStyle(.red)
         }
-        .buttonStyle(.plain)
     }
 
     // MARK: - Category Grid

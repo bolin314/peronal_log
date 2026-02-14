@@ -1,3 +1,4 @@
+import Combine
 import LogCore
 import SwiftUI
 
@@ -19,11 +20,18 @@ final class WatchRecordingViewModel: ObservableObject {
     let locationService = LocationService()
     let transcriptionService = TranscriptionService(modelVariant: "tiny")
 
+    private var cancellables = Set<AnyCancellable>()
     private var audioURL: URL?
     private var recordingDuration: Double?
     private var capturedLocation: (latitude: Double, longitude: Double)?
     private var autoDismissTask: Task<Void, Never>?
     private weak var modelContext: ModelContext?
+
+    init() {
+        locationService.objectWillChange
+            .sink { [weak self] in self?.objectWillChange.send() }
+            .store(in: &cancellables)
+    }
 
     // MARK: - Recording
 

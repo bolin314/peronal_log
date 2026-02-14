@@ -18,18 +18,18 @@ public enum LogCategory: String, Codable, CaseIterable, Sendable {
     public var systemImage: String {
         switch self {
         case .todo: "checklist"
-        case .thoughts: "brain.head.profile"
+        case .thoughts: "lightbulb.fill"
         case .log: "text.book.closed"
-        case .mood: "heart.fill"
+        case .mood: "sparkles"
         }
     }
 
     public var color: Color {
         switch self {
         case .todo: .blue
-        case .thoughts: .purple
+        case .thoughts: .orange
         case .log: .green
-        case .mood: .orange
+        case .mood: .purple
         }
     }
 }

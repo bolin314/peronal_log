@@ -70,6 +70,20 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       TEST_TARGET_NAME: VoiceLogWatch
 
+  VoiceLogAppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - Tests/VoiceLogAppUITests
+    dependencies:
+      - target: VoiceLogApp
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.voicelog.app.uitests
+      SWIFT_VERSION: "5.9"
+      GENERATE_INFOPLIST_FILE: YES
+      TEST_TARGET_NAME: VoiceLogApp
+
   LogCoreTests:
     type: bundle.unit-test
     platform: iOS

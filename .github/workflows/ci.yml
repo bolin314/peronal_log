@@ -60,16 +60,27 @@ jobs:
             -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO
 
-      - name: Commit watchOS screenshots
+      - name: Capture iOS screenshots
+        continue-on-error: true
+        run: |
+          mkdir -p /tmp/ios-screenshots
+          xcodebuild test \
+            -scheme VoiceLogAppUITests \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -skipPackagePluginValidation \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Commit screenshots
         if: github.event_name == 'push'
         run: |
           mkdir -p docs/screenshots
           cp /tmp/watchos-screenshots/*.png docs/screenshots/ 2>/dev/null || true
+          cp /tmp/ios-screenshots/*.png docs/screenshots/ 2>/dev/null || true
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/screenshots/
           git diff --cached --quiet && echo "No screenshot changes" && exit 0
-          git commit -m "Update watchOS screenshots [skip ci]"
+          git commit -m "Update screenshots [skip ci]"
           git push
 
       - name: Upload watchOS screenshots
@@ -78,4 +89,12 @@ jobs:
         with:
           name: watchos-screenshots
           path: /tmp/watchos-screenshots/
+          if-no-files-found: warn
+
+      - name: Upload iOS screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-screenshots
+          path: /tmp/ios-screenshots/
           if-no-files-found: warn

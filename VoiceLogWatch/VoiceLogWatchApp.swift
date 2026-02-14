@@ -3,6 +3,12 @@ import SwiftUI
 
 @main
 struct VoiceLogWatchApp: App {
+    private let transferService = WatchTransferService.shared
+
+    init() {
+        transferService.activate()
+    }
+
     var body: some Scene {
         WindowGroup {
             NavigationStack {

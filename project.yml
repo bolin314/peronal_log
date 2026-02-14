@@ -21,6 +21,7 @@ targets:
     dependencies:
       - package: LogCore
         product: LogCore
+      - sdk: WatchConnectivity.framework
     settings:
       INFOPLIST_GENERATION_MODE: GeneratedFile
       PRODUCT_BUNDLE_IDENTIFIER: com.voicelog.app
@@ -41,6 +42,7 @@ targets:
     dependencies:
       - package: LogCore
         product: LogCore
+      - sdk: WatchConnectivity.framework
     settings:
       INFOPLIST_GENERATION_MODE: GeneratedFile
       PRODUCT_BUNDLE_IDENTIFIER: com.voicelog.app.watchkitapp

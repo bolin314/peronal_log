@@ -106,6 +106,7 @@ final class WatchRecordingViewModel: ObservableObject {
         )
 
         context.insert(log)
+        WatchTransferService.shared.transferVoiceLog(log)
 
         reset()
     }

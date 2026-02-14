@@ -19,6 +19,16 @@ struct WatchRecordingView: View {
                 ProgressView("Saving...")
             }
         }
+        .overlay(alignment: .topTrailing) {
+            HStack(spacing: 4) {
+                gpsIndicator
+                Text(formattedDuration)
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.secondary)
+            }
+            .padding(.top, 2)
+            .padding(.trailing, 4)
+        }
         .animation(.easeInOut(duration: 0.3), value: viewModel.state)
         .onAppear {
             viewModel.locationService.requestPermission()
@@ -38,81 +48,51 @@ struct WatchRecordingView: View {
     // MARK: - Record Button
 
     private var recordButton: some View {
-        VStack {
-            HStack {
-                gpsIndicator
-                Spacer()
+        Button(action: viewModel.startRecording) {
+            ZStack {
+                Circle()
+                    .stroke(Color.gray.opacity(0.4), lineWidth: 2)
+                    .frame(width: 70, height: 70)
+                Circle()
+                    .fill(.red)
+                    .frame(width: 60, height: 60)
             }
-            Spacer()
-            Button(action: viewModel.startRecording) {
-                ZStack {
-                    Circle()
-                        .stroke(Color.gray.opacity(0.4), lineWidth: 2)
-                        .frame(width: 70, height: 70)
-                    Circle()
-                        .fill(.red)
-                        .frame(width: 60, height: 60)
-                }
-            }
-            .buttonStyle(.plain)
-            Spacer()
         }
-        .padding()
+        .buttonStyle(.plain)
     }
 
     // MARK: - Recording View
 
     private var recordingView: some View {
-        VStack {
-            HStack {
-                gpsIndicator
-                Spacer()
-            }
-            Spacer()
-            Button { viewModel.stopRecording(context: modelContext) } label: {
-                Circle()
-                    .fill(.red)
-                    .frame(width: 60, height: 60)
-            }
-            .buttonStyle(.plain)
-
-            Text(formattedDuration)
-                .font(.title3.monospacedDigit())
-                .foregroundStyle(.red)
-                .padding(.top, 8)
-            Spacer()
+        Button { viewModel.stopRecording(context: modelContext) } label: {
+            Circle()
+                .fill(.red)
+                .frame(width: 60, height: 60)
         }
-        .padding()
+        .buttonStyle(.plain)
     }
 
     // MARK: - Category Grid
 
     private var categoryGrid: some View {
-        VStack(spacing: 6) {
-            HStack {
-                gpsIndicator
-                Spacer()
-            }
-
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 6) {
-                ForEach(LogCategory.allCases, id: \.self) { category in
-                    Button {
-                        viewModel.selectCategory(category, context: modelContext)
-                    } label: {
-                        VStack(spacing: 4) {
-                            Image(systemName: category.systemImage)
-                                .font(.title2)
-                                .foregroundStyle(.white)
-                            Text(category.displayName)
-                                .font(.caption2)
-                                .foregroundStyle(.white)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(category.color, in: RoundedRectangle(cornerRadius: 10))
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 6) {
+            ForEach(LogCategory.allCases, id: \.self) { category in
+                Button {
+                    viewModel.selectCategory(category, context: modelContext)
+                } label: {
+                    VStack(spacing: 4) {
+                        Image(systemName: category.systemImage)
+                            .font(.title2)
+                            .foregroundStyle(.white)
+                        Text(category.displayName)
+                            .font(.caption2)
+                            .foregroundStyle(.white)
                     }
-                    .buttonStyle(.plain)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(category.color, in: RoundedRectangle(cornerRadius: 10))
                 }
+                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal)

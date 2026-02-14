@@ -27,7 +27,7 @@ jobs:
         run: |
           xcodebuild build \
             -scheme VoiceLogApp \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0' \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO
 
@@ -35,7 +35,7 @@ jobs:
         run: |
           xcodebuild build \
             -scheme VoiceLogWatch \
-            -destination 'platform=watchOS Simulator,name=Apple Watch Series 10 (46mm),OS=11.0' \
+            -destination 'platform=watchOS Simulator,name=Apple Watch Series 10 (46mm),OS=latest' \
             -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO
 
@@ -43,6 +43,6 @@ jobs:
         run: |
           xcodebuild test \
             -scheme LogCoreTests \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0' \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             -skipPackagePluginValidation \
             CODE_SIGNING_ALLOWED=NO
